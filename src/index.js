@@ -56,15 +56,12 @@ app.delete("/api/data/:id", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
-  const newID = () => {
-    let maxID = 0;
-    for (let dataPoint of data) {
-      if (dataPoint.id > maxID) {
-        maxID = dataPoint.id;
-      }
+  let maxID = 0;
+  for (let dataPoint of data) {
+    if (dataPoint.id > maxID) {
+      maxID = dataPoint.id;
     }
-    return maxID;
-  };
+  }
   const newEntry = {
     id: maxID++,
     ...request.body,
