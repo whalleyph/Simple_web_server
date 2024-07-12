@@ -31,7 +31,7 @@ app.get("/api/data/", (request, response) => {
 });
 
 app.get("/info/", (request, response) => {
-  const time = response.header.time;
+  const time = new Date().toUTCString();
   response.send(
     `<p>Phonebook has info for ${data.length} people</p>
     <p>${time}</p>`
