@@ -56,18 +56,30 @@ app.delete("/api/data/:id", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
-  let maxID = 0;
-  for (let dataPoint of data) {
-    if (dataPoint.id > maxID) {
-      maxID = dataPoint.id;
+  try {
+    if (!request.body.name || !request.body.number) {
+      throw new Error("Name and age are required");
     }
+
+    let maxID = 0;
+    for (let dataPoint of data) {
+      if (dataPoint.name === request.body.name) {
+        throw new Error("name must be unique");
+      }
+      if (dataPoint.id > maxID) {
+        maxID = dataPoint.id;
+      }
+    }
+    const newEntry = {
+      id: maxID + 1,
+      ...request.body,
+    };
+    data.push(newEntry);
+    response.json(newEntry);
+  } catch (err) {
+    response.status(err);
+    return;
   }
-  const newEntry = {
-    id: maxID++,
-    ...request.body,
-  };
-  data.push(newEntry);
-  response.json(newEntry);
 });
 
 const PORT = 3001;
