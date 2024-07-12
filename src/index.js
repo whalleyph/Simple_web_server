@@ -30,6 +30,16 @@ app.get("/api/data/", (request, response) => {
   response.json(data);
 });
 
+app.get('/api/data/:id', (request, response) => {
+    const id = request.params.id
+    const dataPoint = data.find(dataPoint => dataPoint.id == id)
+    if (dataPoint) {
+        response.json(dataPoint)
+      } else {
+        response.status(404).end()
+      }
+  })
+
 app.get("/info/", (request, response) => {
   const time = new Date().toUTCString();
   response.send(
