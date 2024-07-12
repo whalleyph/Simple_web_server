@@ -40,7 +40,7 @@ app.get("/api/data/:id", (request, response) => {
   }
 });
 
-app.get("/info/", (request, response) => {
+app.get("/info", (request, response) => {
   const time = new Date().toUTCString();
   response.send(
     `<p>Phonebook has info for ${data.length} people</p>
@@ -53,6 +53,24 @@ app.delete("/api/data/:id", (request, response) => {
   data = data.filter((dataPoint) => dataPoint.id != id);
 
   response.status(204).end();
+});
+
+app.post("/api/persons", (request, response) => {
+  const newID = () => {
+    let maxID = 0;
+    for (let dataPoint of data) {
+      if (dataPoint.id > maxID) {
+        maxID = dataPoint.id;
+      }
+    }
+    return maxID;
+  };
+  const newEntry = {
+    id: maxID++,
+    ...request.body,
+  };
+  data.push(newEntry);
+  response.json(newEntry);
 });
 
 const PORT = 3001;
