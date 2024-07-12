@@ -78,7 +78,6 @@ app.post("/api/persons", (request, response) => {
     response.json(newEntry);
   } catch (err) {
     response.status(err);
-    return;
   }
 });
 
