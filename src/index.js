@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-const data = [
+let data = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -30,15 +30,15 @@ app.get("/api/data/", (request, response) => {
   response.json(data);
 });
 
-app.get('/api/data/:id', (request, response) => {
-    const id = request.params.id
-    const dataPoint = data.find(dataPoint => dataPoint.id == id)
-    if (dataPoint) {
-        response.json(dataPoint)
-      } else {
-        response.status(404).end()
-      }
-  })
+app.get("/api/data/:id", (request, response) => {
+  const id = request.params.id;
+  const dataPoint = data.find((dataPoint) => dataPoint.id == id);
+  if (dataPoint) {
+    response.json(dataPoint);
+  } else {
+    response.status(404).end();
+  }
+});
 
 app.get("/info/", (request, response) => {
   const time = new Date().toUTCString();
@@ -46,6 +46,13 @@ app.get("/info/", (request, response) => {
     `<p>Phonebook has info for ${data.length} people</p>
     <p>${time}</p>`
   );
+});
+
+app.delete("/api/data/:id", (request, response) => {
+  const id = request.params.id;
+  data = data.filter((dataPoint) => dataPoint.id != id);
+
+  response.status(204).end();
 });
 
 const PORT = 3001;
