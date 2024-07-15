@@ -6,10 +6,10 @@ morgan.token('req-body', (req, res) => {
     if (req.method === 'POST') {
       return JSON.stringify(req.body);
     }
-    return '-';
+    return '';
   });
 
-app.use(morgan(':method :url :status :response-time ms - :res[content-length] - :req-body'));
+app.use(morgan(':method :url :status :response-time ms :res[content-length] :req-body'));
 app.use(express.json());
 
 let data = [
