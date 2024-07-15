@@ -77,7 +77,7 @@ app.post("/api/persons", (request, response) => {
     data.push(newEntry);
     response.json(newEntry);
   } catch (err) {
-    response.sendStatus(err);
+    response.json({error: err.message});
   }
 });
 
