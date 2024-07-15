@@ -67,17 +67,17 @@ app.post("/api/persons", (request, response) => {
         throw new Error("name must be unique");
       }
       if (dataPoint.id > maxID) {
-        maxID = dataPoint.id;
+        maxID = parseInt(dataPoint.id);
       }
     }
     const newEntry = {
-      id: maxID + 1,
+      id: `${maxID + 1}`,
       ...request.body,
     };
     data.push(newEntry);
     response.json(newEntry);
   } catch (err) {
-    response.status(err);
+    response.sendStatus(err);
   }
 });
 
